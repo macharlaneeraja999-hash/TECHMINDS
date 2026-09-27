@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TECHMINDS - Smart Waste Management</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h2>TECHMINDS</h2>
+            <p>Smart Waste Management</p>
+        </div>
+
+        <button class="nav-btn active" onclick="showSection('dashboard')">
+            📊 Dashboard
+        </button>
+
+        <button class="nav-btn" onclick="showSection('bins')">
+            🗑️ Smart Bins
+        </button>
+
+        <button class="nav-btn" onclick="showSection('segregation')">
+            ♻️ Segregation
+        </button>
+
+        <button class="nav-btn" onclick="showSection('alerts')">
+            🚨 Alerts
+        </button>
+
+        <button class="nav-btn" onclick="showSection('collection')">
+            🚛 Collection
+        </button>
+
+        <button class="nav-btn" onclick="showSection('routes')">
+            🗺️ Collection Routes
+        </button>
+
+        <button class="nav-btn" onclick="showSection('sanitation')">
+            🧹 Sanitation
+        </button>
+
+        <button class="nav-btn" onclick="showSection('analytics')">
+            📈 Analytics
+        </button>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main">
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div>
+                <h1>Smart Waste Management</h1>
+                <p>Smart Waste Segregation, Disposal and Sanitation Management System</p>
+            </div>
+
+            <div class="system-status">
+                🟢 System Online
+            </div>
+
+        </header>
+
+
+        <!-- DEPLOYMENT AREA -->
+
+        <div class="location-box">
+
+            <label for="deploymentArea">
+                Deployment Area
+            </label>
+
+            <select id="deploymentArea" onchange="changeLocation()">
+
+                <option>Municipal / Community Area</option>
+                <option>Residential Area</option>
+                <option>Educational Institution</option>
+                <option>Hospital</option>
+                <option>Commercial Area</option>
+                <option>Public Place</option>
+                <option>Industrial Area</option>
+
+            </select>
+
+        </div>
+
+
+        <!-- DASHBOARD -->
+
+        <section id="dashboard" class="section active">
+
+            <div class="section-title">
+
+                <div>
+                    <h2>Dashboard</h2>
+                    <p>Real-time overview of waste management operations</p>
+                </div>
+
+                <button class="primary-btn" onclick="simulateWaste()">
+                    Simulate Waste
+                </button>
+
+            </div>
+
+
+            <!-- STAT CARDS -->
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <span>🗑️</span>
+                    <h3>Total Smart Bins</h3>
+                    <strong id="totalBins">0</strong>
+                </div>
+
+                <div class="stat-card">
+                    <span>🟢</span>
+                    <h3>Normal Bins</h3>
+                    <strong id="normalBins">0</strong>
+                </div>
+
+                <div class="stat-card">
+                    <span>🔴</span>
+                    <h3>Alert Bins</h3>
+                    <strong id="alertBins">0</strong>
+                </div>
+
+                <div class="stat-card">
+                    <span>♻️</span>
+                    <h3>Waste Collected</h3>
+                    <strong id="collectedWaste">0 kg</strong>
+                </div>
+
+            </div>
+
+
+            <!-- LIVE BIN STATUS -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h3>Live Smart Bin Status</h3>
+
+                    <span class="live">
+                        LIVE
+                    </span>
+
+                </div>
+
+                <div id="dashboardBins" class="bin-grid"></div>
+
+            </div>
+
+
+            <!-- RECENT ALERTS -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h3>Recent Alerts</h3>
+
+                    <button class="secondary-btn" onclick="showSection('alerts')">
+                        View All
+                    </button>
+
+                </div>
+
+                <div id="dashboardAlerts"></div>
+
+            </div>
+
+
+            <!-- SYSTEM WORKFLOW -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h3>System Workflow</h3>
+
+                </div>
+
+                <div class="workflow">
+
+                    <div>
+                        <span>1</span>
+                        <p>Waste Input</p>
+                    </div>
+
+                    <div class="arrow">→</div>
+
+                    <div>
+                        <span>2</span>
+                        <p>Smart Segregation</p>
+                    </div>
+
+                    <div class="arrow">→</div>
+
+                    <div>
+                        <span>3</span>
+                        <p>Monitoring</p>
+                    </div>
+
+                    <div class="arrow">→</div>
+
+                    <div>
+                        <span>4</span>
+                        <p>Alert</p>
+                    </div>
+
+                    <div class="arrow">→</div>
+
+                    <div>
+                        <span>5</span>
+                        <p>Collection</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SMART BINS -->
+
+        <section id="bins" class="section">
+
+            <div class="section-title">
+
+                <div>
+                    <h2>🗑️ Smart Bins</h2>
+                    <p>Monitor waste levels and bin conditions</p>
+                </div>
+
+            </div>
+
+            <div id="binsGrid" class="bin-grid"></div>
+
+        </section>
+
+
+        <!-- SEGREGATION -->
+
+        <section id="segregation" class="section">
+
+            <div class="section-title">
+
+                <div>
+                    <h2>♻️ Waste Segregation</h2>
+                    <p>Smart classification of different waste types</p>
+                </div>
+
+            </div>
+
+
+            <div class="segregation-grid">
+
+                <div class="seg-card">
+
+                    <span>💧</span>
+
+                    <h3>Wet Waste</h3>
+
+                    <p>
+                        Food waste, organic waste and biodegradable materials.
+                    </p>
+
+                    <button class="primary-btn"
+                        onclick="classifyWaste('Wet Waste')">
+                        Simulate
+                    </button>
+
+                </div>
+
+
+                <div class="seg-card">
+
+                    <span>📦</span>
+
+                    <h3>Dry Waste</h3>
+
+                    <p>
+                        Paper, packaging and other non-biodegradable waste.
+                    </p>
+
+                    <button class="primary-btn"
+                        onclick="classifyWaste('Dry Waste')">
+                        Simulate
+                    </button>
+
+                </div>
+
+
+                <div class="seg-card">
+
+                    <span>♻️</span>
+
+                    <h3>Recyclable Waste</h3>
+
+                    <p>
+                        Plastic, metal, glass and recyclable materials.
+                    </p>
+
+                    <button class="primary-btn"
+                        onclick="classifyWaste('Recyclable Waste')">
+                        Simulate
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ALERTS -->
+
+        <section id="alerts" class="section">
+
+            <div class="section-title">
+
+                <div>
+                    <h2>🚨 Alerts</h2>
+                    <p>Waste overflow and system notifications</p>
+                </div>
+
+                <button class="secondary-btn" onclick="clearAlerts()">
+                    Clear Alerts
+                </button>
+
+            </div>
+
+            <div class="panel">
+
+                <div id="alertsList"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- COLLECTION -->
+
+        <section id="collection" class="section">
+
+            <div class="section-title">
+
+                <div>
+                    <h2>🚛 Waste Collection</h2>
+                    <p>Manage waste collection from smart bins</p>
+                </div>
+
+            </div>
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h3>Collection Status</h3>
+
+                </div>
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Bin ID</th>
+                                <th>Location</th>
+                                <th>Waste Level</th>
+                                <th>Waste Type</th>
+                                <th>Action</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="collectionTable">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- COLLECTION ROUTES -->
+
+        <section id="routes" class="section">
+
+            <div class="section-title">
+
+                <div>
+                    <h2>🗺️ Collection Routes</h2>
+                    <p>Prioritize waste collection based on bin capacity and location</p>
+                </div>
+
+                <button class="primary-btn" onclick="generateRoute()">
+                    Generate Route
+                </button>
+
+            </div>
+
+
+            <div class="route-summary">
+
+                <div class="route-card">
+
+                    <span>🔴</span>
+
+                    <h3>High Priority</h3>
+
+                    <strong id="highPriority">0</strong>
+
+                </div>
+
+
+                <div class="route-card">
+
+                    <span>🟠</span>
+
+                    <h3>Medium Priority</h3>
+
+                    <strong id="mediumPriority">0</strong>
+
+                </div>
+
+
+                <div class="route-card">
+
+                    <span>🟢</span>
+
+                    <h3>Normal</h3>
+
+                    <strong id="normalPriority">0</strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel route-panel">
+
+                <div class="panel-header">
+
+                    <h3>🚛 Recommended Collection Route</h3>
+
+                    <span class="live">
+                        AUTO PRIORITY
+                    </span>
+
+                </div>
+
+
+                <div id="routeList">
+
+                    <div class="empty-alert">
+                        Click "Generate Route" to create a collection route.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SANITATION -->
+
+        <section id="sanitation" class="section">
+
+            <div class="section-title">
+
+                <div>
+                    <h2>🧹 Sanitation Monitoring</h2>
+                    <p>Monitor sanitation requirements and cleaning activities</p>
+                </div>
+
+                <button class="primary-btn" onclick="createSanitationAlert()">
+                    Create Alert
+                </button>
+
+            </div>
+
+
+            <div class="sanitation-grid">
+
+                <div class="sanitation-card">
+
+                    <span>🧹</span>
+
+                    <h3>Pending Inspections</h3>
+
+                    <strong id="pendingInspections">0</strong>
+
+                </div>
+
+
+                <div class="sanitation-card">
+
+                    <span>✅</span>
+
+                    <h3>Completed Inspections</h3>
+
+                    <strong id="completedInspections">0</strong>
+
+                </div>
+
+
+                <div class="sanitation-card">
+
+                    <span>⚠️</span>
+
+                    <h3>Sanitation Alerts</h3>
+
+                    <strong id="sanitationAlerts">0</strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h3>Sanitation Zones</h3>
+
+                </div>
+
+                <div id="sanitationZones"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ANALYTICS -->
+
+        <section id="analytics" class="section">
+
+            <div class="section-title">
+
+                <div>
+                    <h2>📈 Analytics</h2>
+                    <p>Waste management performance overview</p>
+                </div>
+
+            </div>
+
+
+            <div class="analytics-grid">
+
+                <div class="analytics-card">
+
+                    <h3>Waste Collection</h3>
+
+                    <p>
+                        Monitor total waste collected through smart bins.
+                    </p>
+
+                    <strong id="analyticsCollected">
+                        0 kg
+                    </strong>
+
+                </div>
+
+
+                <div class="analytics-card">
+
+                    <h3>Bin Utilization</h3>
+
+                    <p>
+                        Track smart bin capacity and usage levels.
+                    </p>
+
+                    <strong id="analyticsUtilization">
+                        0%
+                    </strong>
+
+                </div>
+
+
+                <div class="analytics-card">
+
+                    <h3>System Alerts</h3>
+
+                    <p>
+                        Monitor overflow and sanitation alerts.
+                    </p>
+
+                    <strong id="analyticsAlerts">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+
+        <footer>
+
+            <p>
+                TECHMINDS | Smart Waste Segregation, Disposal and Sanitation Management System
+            </p>
+
+            <p>
+                Smart India Hackathon 2026 | SIH26195
+            </p>
+
+        </footer>
+
+    </main>
+
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>
